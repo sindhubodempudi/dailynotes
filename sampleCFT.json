@@ -1,0 +1,77 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "First CloudFormation Template for EC2Instance",
+  "Parameters":{
+  	"KeyName": {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "Default": "devops",
+      "ConstraintDescription" : "must be the name of an existing EC2 KeyPair."
+    },
+    "InstanceType": {
+      "Description" : "Type of InstanceType",
+      "Type": "String",
+      "Default": "t2.micro"
+    },
+    "ImageId": {
+      "Description" : "Type of InstanceType",
+      "Type": "String",
+      "Default": "ami-a4c7edb2"
+    }
+  },
+
+"Resources" : {	
+	"InstanceSecurityGroup" : {
+   	"Type" : "AWS::EC2::SecurityGroup",
+   	"Properties" : {
+    "GroupDescription" : "Allow http to client host",
+      "VpcId" : "vpc-68c1ba0c",
+      "SecurityGroupIngress" : [{
+            "IpProtocol" : "tcp",
+            "FromPort" : "80",
+            "ToPort" : "80",
+            "CidrIp" : "0.0.0.0/0"
+         }],
+      "SecurityGroupIngress" : [{
+            "IpProtocol" : "tcp",
+            "FromPort" : "22",
+            "ToPort" : "22",
+            "CidrIp" : "0.0.0.0/0"
+         }]
+	}
+},
+	"MyEC2Instance" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+           "ImageId" : { "Ref": "ImageId" },
+           "KeyName" : { "Ref" : "KeyName" },
+           "InstanceType" : {"Ref" : "InstanceType"},
+           "IamInstanceProfile" : "raghutest",
+           "AvailabilityZone" : "us-east-1a",
+           "SecurityGroupIds" : [ {"Ref" : "InstanceSecurityGroup" }],
+           "Tags" : [ 
+           		{
+ 			 "Key" : "Name",
+  			 "Value" : "SampleCFT"
+				},
+			{
+ 			 "Key" : "Env",
+  			 "Value" : "Testing"
+				}
+           	]
+       }
+   }
+},
+ "Outputs" : {
+    "PublicDNS" : {
+      "Description" : "Public DNSName of the newly created EC2 instance",
+      "Value" : { "Fn::GetAtt" : [ "MyEC2Instance", "PublicDnsName" ] }
+    },
+    "PublicIP" : {
+      "Description" : "Public IP address of the newly created EC2 instance",
+      "Value" : { "Fn::GetAtt" : [ "MyEC2Instance", "PublicIp" ] }
+    }
+
+}
+}
