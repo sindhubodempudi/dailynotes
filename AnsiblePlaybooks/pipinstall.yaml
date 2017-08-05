@@ -1,11 +1,16 @@
 ---
-- hosts: ubuntu-server
+- hosts: localhost
   become: yes
   tasks:
-  	- name: Install PIP 
-  	  apt:
-  	  	name: pip
-  	  	state: latest
+    - name: Install Python
+      apt:
+       name: python3
+       state: latest
+
+    - name: Install PIP 
+      apt:
+       name: python-pip
+       state: latest
 
     - name: Install ansible
       command: pip install ansible
