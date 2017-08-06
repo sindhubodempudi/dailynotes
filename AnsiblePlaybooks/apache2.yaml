@@ -1,15 +1,26 @@
 ---
-- hosts: localhost
+- hosts: webservers
   become: yes
   tasks:
-  	- name: Install Apache2
-  	  apt:
-  	  	name: apache2
-  	  	state: latest
+   - name: Install Apache2
+     apt:
+      name: apache2
+      state: latest
+     ignore_erros: true
+   
+   - name: Install httpd
+     yum:
+      name: httpd
+      state: latest
+     ignore_errors: true
 
-  	- name: Edit the index file 
-  	  lineinfile:
-  	  	path: /var/www/html/index.html
-  	  	line: Hello this line is written by Ansible - lineinfile module
-  	  	state: present
+   - name: Edit the index file 
+     lineinfile:
+      path: /var/www/html/index.html
+      line: /nHello this line is written by Ansible - lineinfile module
+      state: present
 
+   - name: Restart Apache2
+     service:
+      name: apache2
+      state: restarted 
