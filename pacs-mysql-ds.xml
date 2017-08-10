@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: pacs-mysql-ds.xml 13116 2010-04-09 10:06:49Z gunterze $ -->
+<!--  Datasource config for MySQL using 3.0.9 available from:
+http://www.mysql.com/downloads/api-jdbc-stable.html
+-->
+
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>pacsDS</jndi-name>
+    <connection-url>jdbc:mysql://{{ db_host }}:{{ db_port }}/{{ pacsdb_name }}</connection-url>
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+    <user-name>{{ pacsdb_username }}</user-name>
+    <password>{{ pacsdb_password }}</password>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+    <valid-connection-checker-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLValidConnectionChecker</valid-connection-checker-class-name>
+    <metadata>
+       <type-mapping>mySQL</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+</datasources>
+
+<!-- <datasources>
+  <local-tx-datasource>
+    <jndi-name>pacsDS</jndi-name>
+    <connection-url>jdbc:mysql://<%= scope.lookupvar('dcm4chee::db_host') %>:<%= scope.lookupvar('dcm4chee::db_port') %>/<%= scope.lookupvar('dcm4chee::pacsdb_name') %></connection-url>
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+    <user-name><%= scope.lookupvar('dcm4chee::pacsdb_username') %></user-name>
+    <password><%= scope.lookupvar('dcm4chee::pacsdb_password') %></password>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+    <valid-connection-checker-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLValidConnectionChecker</valid-connection-checker-class-name>
+    <metadata>
+       <type-mapping>mySQL</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+</datasources>
+
+ -->

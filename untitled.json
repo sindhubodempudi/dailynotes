@@ -1,0 +1,27 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "First CloudFormation Template for EC2Instance",
+
+"Resources" : {
+	"MyEC2Instance" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+           "ImageId" : "ami-a4c7edb2",
+           "KeyName" : "devops",
+           "IamInstanceProfile" : "raghutest",
+           "AvailabilityZone" : "us-east-1a",
+           "SubnetId" : "subnet-dc9c35aa",
+           "SecurityGroups" : "sg-afb5fbd6",
+           "Tags" : [ 
+           		{
+ 			 "Key" : "Name",
+  			 "Value" : "SampleCFT"
+				},
+			{
+ 			 "Key" : "Env",
+  			 "Value" : "Testing"
+				}
+           	],
+}
+}

@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Install Python
+      apt:
+       name: python3
+       state: latest
+
+    - name: Install PIP 
+      apt:
+       name: python-pip
+       state: latest
+
+    - name: Install ansible
+      command: pip install ansible
+
+    - name: Install boto3
+      command: pip install boto3
+
+    - name: upgrade ansible
+      command: pip install --upgrade ansible
